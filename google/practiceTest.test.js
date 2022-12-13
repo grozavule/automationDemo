@@ -4,10 +4,11 @@
 const {Builder, Capabilities} = require('selenium-webdriver')
 
 // And we are also importing a function here that will do a search on Google
-const {search} = require('./search')
+const {search, search2} = require('./search')
 
 // We ALWAYS need to require chromedriver. We don't need to save to a variable since we just need to bring in chromedriver once and not reference it again.
 require('chromedriver')
+//require('geckodriver')
 
 // And this next line is also the same as far as setting up Chrome goes
 const driver = new Builder().withCapabilities(Capabilities.chrome()).build()
@@ -24,7 +25,14 @@ afterAll(async () => {
 
 // This is how we can add individual tests, the string 'Google Search Test' is just the name of the test
 // We're using async functions because we need to use 'await' when we're dealing with the browser
-test('Google Search Test', async () => {
-    await search(driver, 'Tenet')
-})
+describe('Google Search Tests', () => {
+    test('Verify that the search results contain the search term', async () => {
+        await search(driver, 'Tenet')
+    });
+
+    test('Verify that Google Image Search returns cute puppies', async () => {
+        await search2(driver, 'puppies');
+    });
+});
+
 
